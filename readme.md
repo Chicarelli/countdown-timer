@@ -1,3 +1,1 @@
-<video width="500" height="350" autoplay muted>
-    <source src="./public/countdown-timer.mp4" type="video/mp4"/>
-</video>
+https://user-images.githubusercontent.com/49206718/201915852-5e841570-eb0e-4f60-afba-774ffa70b441.mp4
