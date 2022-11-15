@@ -11,12 +11,21 @@ document.addEventListener("DOMContentLoaded", function () {
   elements = {
     inputTimer: document.getElementById("input-timer"),
     buttonStart: document.getElementById("button-start"),
+    daysInput: document.getElementById("timer_days"),
+    hoursInput: document.getElementById("timer_hours"),
+    minutesInput: document.getElementById("timer_minutes"),
+    secondsInput: document.getElementById("timer_seconds"),
+    stopButton: document.getElementById("stop-button"),
   };
+
+  elements.stopButton.addEventListener("click", handleStop);
 
   preloadData();
 
   if (getTime()) {
     startCountdown();
+  } else {
+    handleStop();
   }
 });
 
@@ -61,29 +70,51 @@ function removeTime() {
 }
 
 function updateCountdown() {
+  if (new Date(getTime()).getFullYear() - new Date().getFullYear() > 5)
+    return handleStop();
+
   const now = new Date().getTime();
   const target = new Date(getTime()).getTime();
-  console.log({ target });
   const difference = target - now;
 
   if (difference <= 0) {
-    clearInterval(timer);
+    handleStop();
     return;
   }
 
-  const days = difference / DAYS_MILLISECONDS;
-  const hours = (difference % DAYS_MILLISECONDS) / HOURS_MILLISECONDS;
-  const minutes =
-    ((difference % DAYS_MILLISECONDS) % HOURS_MILLISECONDS) /
-    MINUTES_MILLISECONDS;
-  const seconds =
-    (((difference % DAYS_MILLISECONDS) % HOURS_MILLISECONDS) %
-      MINUTES_MILLISECONDS) /
-    SECONDS_MS;
+  const days = Math.floor(difference / DAYS_MS);
+  const hours = Math.floor((difference % DAYS_MS) / HOURS_MS);
+  const minutes = Math.floor(((difference % DAYS_MS) % HOURS_MS) / MINUTES_MS);
+  const seconds = Math.floor(
+    (((difference % DAYS_MS) % HOURS_MS) % MINUTES_MS) / SECONDS_MS
+  );
 
-  console.log({
-    now,
-    target,
-    difference: target - now,
-  });
+  updateCountdownElements({ days, hours, minutes, seconds });
+
+  if (!timer) {
+    timer = setInterval(updateCountdown, 1000);
+  }
+}
+
+function updateCountdownElements({ days, hours, minutes, seconds }) {
+  if (isNaN(days) || isNaN(hours) || isNaN(minutes) || isNaN(seconds)) {
+    alert("Insira uma data válida");
+    return handleStop();
+  }
+
+  elements.daysInput.value = formatInput(days);
+  elements.hoursInput.value = formatInput(hours);
+  elements.minutesInput.value = formatInput(minutes);
+  elements.secondsInput.value = formatInput(seconds);
+}
+
+function formatInput(value) {
+  return value.toString().length === 1 ? `0${value}` : value;
+}
+
+function handleStop() {
+  clearInterval(timer);
+  updateCountdownElements({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  removeTime();
+  timer = null;
 }

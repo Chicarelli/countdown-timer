@@ -11,10 +11,22 @@
 <body>
     <div class="bg-circle circle-top"></div>
     <div class="bg-circle circle-bottom"></div>
-    <form id="form-new-timer">
+
+    <form id="form-new-timer" class="form-timer">
         <input type="datetime-local" id="input-timer"/>
         <button type="submit" id="button-start">Start</button>
     </form>
+
+    <div id="content-hour">
+        <input class="box" type="text" disabled id="timer_days"/>
+        <input class="box" type="text" disabled id="timer_hours"/>
+        <input class="box" type="text" disabled id="timer_minutes"/>
+        <input class="box" type="text" disabled id="timer_seconds"/>
+    </div>
+    
+    <div class="stop-button-div">
+        <button id="stop-button">Stop</button>
+    </div>
         
     <script src="./script/countdown-timer.js" type="module"></script>
 </body>
