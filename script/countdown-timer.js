@@ -78,6 +78,7 @@ function updateCountdown() {
   const difference = target - now;
 
   if (difference <= 0) {
+    alert("it' s done");
     handleStop();
     return;
   }
