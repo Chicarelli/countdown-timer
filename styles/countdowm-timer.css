@@ -1,0 +1,25 @@
+body {
+    background: linear-gradient(68.5deg, #2E208E 16.57%, #9B56A6 100.9%);
+    overflow: hidden;
+}
+
+.bg-circle {
+    background: linear-gradient(157.28deg, #DF40A9 7.22%, #4D35A3 57.07%);
+    width: 600px;
+    height: 600px;
+    border-radius: 100%;
+    position: absolute;
+    opacity: .6;
+    z-index: -1;
+}
+
+.bg-circle.circle-top {
+    transform: rotate(180deg);
+    top: -100px;
+    left: -100px;
+}
+
+.bg-circle.circle-bottom {
+    right: -100px;
+    bottom: -100px;
+}
